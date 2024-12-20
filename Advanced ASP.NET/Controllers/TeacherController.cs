@@ -23,5 +23,15 @@ namespace Advanced_ASP.NET.Controllers
             }
             return Ok(teacher);
         }
+        [HttpPost]
+        public IActionResult AddTeacher(Teacher teacher)
+        {
+            _teacherService.AddTeacher(teacher);
+            if (teacher == null)
+            {
+                return BadRequest();
+            }
+            return Created( "Successfully added", teacher);
+        }
     }
 }

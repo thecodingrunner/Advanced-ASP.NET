@@ -14,6 +14,8 @@ namespace Advanced_ASP.NET
             builder.Services.AddControllers();
             builder.Services.AddScoped<SpellsService>();
             builder.Services.AddScoped<SpellsModel>();
+            builder.Services.AddScoped<TeacherModel>();
+            builder.Services.AddScoped<TeacherService>();
 
             builder.Services.AddHealthChecks()
                  .AddCheck<ProductHealthCheck>("teachers_exist_health_check",

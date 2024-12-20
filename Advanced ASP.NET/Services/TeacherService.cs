@@ -15,5 +15,10 @@ namespace Advanced_ASP.NET.Services
         {
             return _teacherModel.GetTeacherById(id);
         }
+
+        public Teacher AddTeacher(Teacher teacher)
+        {
+            return _teacherModel.AddTeacher(teacher);
+        }
     }
 }
