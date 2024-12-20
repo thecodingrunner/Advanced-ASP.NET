@@ -11,5 +11,8 @@ namespace Advanced_ASP.NET.Models
             if (spells == null) return null;
             return spells;
         }
+
+       
     }
+    
 }

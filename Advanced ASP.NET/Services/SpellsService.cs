@@ -14,5 +14,7 @@ namespace Advanced_ASP.NET.Services
         {
             return _spellsModel.FetchSpells();
         }
+
+    
     }
 }
