@@ -30,5 +30,10 @@ namespace Advanced_ASP.NET.Services
         {
             return _teacherModel.GetAllTeachers();
         }
+
+        public Teacher? PatchTeachers(int id)
+        {
+            return _teacherModel.PatchTeachers(id);
+        }
     }
 }

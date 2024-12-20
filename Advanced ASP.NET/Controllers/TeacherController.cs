@@ -5,19 +5,19 @@ using System.Collections.Generic;
 
 namespace Advanced_ASP.NET.Controllers
 {
-        [Route("/api/teachers")]
-        [ApiController]
-        public class TeacherController : Controller
-        {
-            private readonly TeacherService _teacherService;
-            private readonly IMemoryCache _memoryCache;
-            private const string TeacherCacheKey = "TeacherList";
+    [Route("/api/teachers")]
+    [ApiController]
+    public class TeacherController : Controller
+    {
+        private readonly TeacherService _teacherService;
+        private readonly IMemoryCache _memoryCache;
+        private const string TeacherCacheKey = "TeacherList";
 
         public TeacherController(TeacherService teacherService, IMemoryCache memoryCache)
-            {
-                _teacherService = teacherService;
-                _memoryCache = memoryCache;
-            }
+        {
+            _teacherService = teacherService;
+            _memoryCache = memoryCache;
+        }
 
         [HttpGet("{id}")]
         public IActionResult GetTeacherById(int id)
@@ -38,7 +38,7 @@ namespace Advanced_ASP.NET.Controllers
             {
                 return BadRequest();
             }
-            return Created( "Successfully added", teacher);
+            return Created("Successfully added", teacher);
         }
 
         [HttpDelete("{id}")]
@@ -56,18 +56,37 @@ namespace Advanced_ASP.NET.Controllers
         public IActionResult GetAllTeachers()
         {
             List<Teacher> teachers;
-           
+
             if (!_memoryCache.TryGetValue(TeacherCacheKey, out teachers))
             {
                 teachers = _teacherService.GetAllTeachers();
 
-                
+
                 var cacheEntryOptions = new MemoryCacheEntryOptions()
                     .SetAbsoluteExpiration(TimeSpan.FromMinutes(2));
 
                 _memoryCache.Set(TeacherCacheKey, teachers, cacheEntryOptions);
             }
-            return Ok(teachers);    
+            return Ok(teachers);
         }
+
+        [HttpGet("{id}")]
+
+        public IActionResult PatchTeachers(int id)
+        {
+            if (id == null)
+            {
+                  return BadRequest();
+            }
+
+            Teacher patchTeacher = _teacherService.PatchTeachers(id);
+            if(patchTeacher == null)
+            {
+                return NotFound();
+            }
+            return Ok(patchTeacher);
+              
+        }
+
     }
 }

@@ -41,5 +41,21 @@ namespace Advanced_ASP.NET.Models
 
             return teachers;
         }
+
+        public Teacher? PatchTeachers(int id)
+        {
+            var json = File.ReadAllText(teachersPath);
+            List<Teacher> teachers = JsonSerializer.Deserialize<List<Teacher>>(json);
+            
+            var teacherToPatch = teachers.FirstOrDefault(x => x.id == id);
+            if (teacherToPatch == null)
+            {
+                return null;
+            }
+            teacherToPatch.rating += 1;
+
+            return teacherToPatch;
+            
+        }
     }
 }
