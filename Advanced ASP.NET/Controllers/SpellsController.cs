@@ -24,7 +24,5 @@ namespace Advanced_ASP.NET.Controllers
             }
             return Ok(spells);
         }
-
-       
     }
 }
