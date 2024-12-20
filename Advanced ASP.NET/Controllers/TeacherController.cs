@@ -1,6 +1,7 @@
 ﻿using Advanced_ASP.NET.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using System.Collections.Generic;
 
 namespace Advanced_ASP.NET.Controllers
 {
@@ -11,6 +12,7 @@ namespace Advanced_ASP.NET.Controllers
             private readonly TeacherService _teacherService;
             private readonly IMemoryCache _memoryCache;
             private const string TeacherCacheKey = "TeacherList";
+
         public TeacherController(TeacherService teacherService, IMemoryCache memoryCache)
             {
                 _teacherService = teacherService;
@@ -57,7 +59,6 @@ namespace Advanced_ASP.NET.Controllers
            
             if (!_memoryCache.TryGetValue(TeacherCacheKey, out teachers))
             {
-               
                 teachers = _teacherService.GetAllTeachers();
 
                 

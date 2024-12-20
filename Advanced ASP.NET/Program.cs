@@ -33,6 +33,7 @@ namespace Advanced_ASP.NET
             builder.Services.AddScoped<TeacherService>();
             builder.Services.AddScoped<SpellService>();
             builder.Services.AddScoped<SpellModel>();
+            builder.Services.AddMemoryCache();
 
             builder.Services.AddHealthChecks()
                  .AddCheck<ProductHealthCheck>("teachers_exist_health_check",
