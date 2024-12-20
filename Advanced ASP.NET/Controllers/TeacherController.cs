@@ -1,5 +1,6 @@
 ﻿using Advanced_ASP.NET.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Advanced_ASP.NET.Controllers
 {
@@ -8,9 +9,12 @@ namespace Advanced_ASP.NET.Controllers
         public class TeacherController : Controller
         {
             private readonly TeacherService _teacherService;
-            public TeacherController(TeacherService teacherService)
+            private readonly IMemoryCache _memoryCache;
+            private const string TeacherCacheKey = "TeacherList";
+        public TeacherController(TeacherService teacherService, IMemoryCache memoryCache)
             {
                 _teacherService = teacherService;
+                _memoryCache = memoryCache;
             }
 
         [HttpGet("{id}")]
@@ -44,6 +48,25 @@ namespace Advanced_ASP.NET.Controllers
                 return BadRequest();
             }
             return NoContent();
+        }
+
+        [HttpGet]
+        public IActionResult GetAllTeachers()
+        {
+            List<Teacher> teachers;
+           
+            if (!_memoryCache.TryGetValue(TeacherCacheKey, out teachers))
+            {
+               
+                teachers = _teacherService.GetAllTeachers();
+
+                
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(2));
+
+                _memoryCache.Set(TeacherCacheKey, teachers, cacheEntryOptions);
+            }
+            return Ok(teachers);    
         }
     }
 }

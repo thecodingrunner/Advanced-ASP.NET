@@ -19,7 +19,7 @@ namespace Advanced_ASP.NET.Models
             int count = teachers.Select(t => t.id).Max();
             teacher.id = count + 1;
             teachers.Add(teacher);
-            File.WriteAllText(teachersPath, JsonSerializer.Serialize(teachers));
+            File.WriteAllText(teachersPath, JsonSerializer.Serialize(teachers, new JsonSerializerOptions() { WriteIndented = true }));
             return teacher;
         }
 
@@ -30,8 +30,16 @@ namespace Advanced_ASP.NET.Models
             Teacher teacherToDelete = teachers.Where(t => t.id == id).First();
             if (teacherToDelete == null) return null;
             teachers.Remove(teacherToDelete);
-            File.WriteAllText(teachersPath, JsonSerializer.Serialize(teachers));
+            File.WriteAllText(teachersPath, JsonSerializer.Serialize(teachers, new JsonSerializerOptions() { WriteIndented = true }));
             return teacherToDelete;
+        }
+
+        public List<Teacher> GetAllTeachers()
+        {
+            var json = File.ReadAllText(teachersPath);
+            List<Teacher> teachers = JsonSerializer.Deserialize<List<Teacher>>(json);
+
+            return teachers;
         }
     }
 }

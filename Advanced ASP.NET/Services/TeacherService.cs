@@ -25,5 +25,10 @@ namespace Advanced_ASP.NET.Services
         {
             return _teacherModel.DeleteTeacher(id);
         }
+
+        public List<Teacher> GetAllTeachers()
+        {
+            return _teacherModel.GetAllTeachers();
+        }
     }
 }
