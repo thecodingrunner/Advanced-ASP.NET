@@ -23,6 +23,7 @@ namespace Advanced_ASP.NET.Controllers
             }
             return Ok(teacher);
         }
+
         [HttpPost]
         public IActionResult AddTeacher(Teacher teacher)
         {
@@ -32,6 +33,17 @@ namespace Advanced_ASP.NET.Controllers
                 return BadRequest();
             }
             return Created( "Successfully added", teacher);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult AddTeacher(int id)
+        {
+            Teacher deletedTeacher = _teacherService.DeleteTeacher(id);
+            if (deletedTeacher == null)
+            {
+                return BadRequest();
+            }
+            return NoContent();
         }
     }
 }

@@ -20,5 +20,10 @@ namespace Advanced_ASP.NET.Services
         {
             return _teacherModel.AddTeacher(teacher);
         }
+
+        public Teacher? DeleteTeacher(int id)
+        {
+            return _teacherModel.DeleteTeacher(id);
+        }
     }
 }
